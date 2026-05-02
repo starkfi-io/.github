@@ -8,13 +8,13 @@
 
 [![npm: starkfi-mcp](https://img.shields.io/npm/v/starkfi-mcp?label=starkfi-mcp&logo=npm&logoColor=white&color=cb3837)](https://www.npmjs.com/package/starkfi-mcp)
 [![npm: starkfi-agent-skills](https://img.shields.io/npm/v/starkfi-agent-skills?label=starkfi-agent-skills&logo=npm&logoColor=white&color=cb3837)](https://www.npmjs.com/package/starkfi-agent-skills)
-[![Documentation](https://img.shields.io/badge/docs-starkfi.mintlify.app-0D9373?style=flat&logo=readthedocs&logoColor=white)](https://starkfi.mintlify.app/)
+[![Documentation](https://img.shields.io/badge/docs-docs.starkfi.io-0D9373?style=flat&logo=readthedocs&logoColor=white)](https://docs.starkfi.io/)
 [![MCP](https://img.shields.io/badge/protocol-Model%20Context%20Protocol-000000?style=flat)](https://modelcontextprotocol.io/)
 [![Node.js](https://img.shields.io/badge/node.js-%3E%3D20-339933?style=flat&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 
 <br>
 
-[Documentation](https://starkfi.mintlify.app/) · [Getting started & KYC](https://starkfi.mintlify.app/getting-started) · [LLM index](https://starkfi.mintlify.app/llms.txt) · [Dashboard](https://starkfi.io/)
+[Documentation](https://docs.starkfi.io/) · [Getting started & KYC](https://docs.starkfi.io/getting-started) · [LLM index](https://docs.starkfi.io/llms.txt) · [Dashboard](https://starkfi.io/)
 
 </div>
 
@@ -81,7 +81,7 @@ flowchart TB
 |-------------|---------------|
 | **API credential** | `STARKFI_API_KEY` — HTTP header `x-api-key` on all API calls. Issue and rotate keys in the [StarkFi dashboard](https://starkfi.io/). |
 | **Runtime** | **Node.js 20 or newer** for `starkfi-mcp` and setup tooling. |
-| **Product readiness** | Account, environment, and **KYC** steps per [Getting started](https://starkfi.mintlify.app/getting-started) before exercising live flows. |
+| **Product readiness** | Account, environment, and **KYC** steps per [Getting started](https://docs.starkfi.io/getting-started) before exercising live flows. |
 
 ---
 
@@ -89,7 +89,7 @@ flowchart TB
 
 **Best for:** teams on **Cursor** and **Claude Desktop** who want **agent skills** and **MCP** wired consistently on developer machines.
 
-The [`starkfi-agent-skills`](https://github.com/starkfi-io/starkfi-agent-skills) package copies official **Cursor Agent Skills** and merges the **StarkFi** MCP server into host configuration (see repository README for Claude Code flags).
+The [`starkfi-agent-skills`](https://github.com/starkfi-io/starkfi-agent-skills) package copies official **Cursor Agent Skills** and merges the **StarkFi** MCP server into host configuration.
 
 | Step | Action |
 |:----:|--------|
@@ -134,8 +134,6 @@ STARKFI_API_KEY="your_key_here" npx starkfi-agent-skills setup --yes
 | `STARKFI_API_KEY` | Yes | Sent as `x-api-key` on every StarkFi request |
 | `STARKFI_BASE_URL` | No | API base URL; default `https://api.starkfi.io` |
 
-The server may load a local `.env` when the process environment is unset; values already set by the MCP host are not overwritten.
-
 </details>
 
 <details>
@@ -155,8 +153,6 @@ The server may load a local `.env` when the process environment is unset; values
 }
 ```
 
-For a global binary on `PATH`, set `"command": "starkfi-mcp"` and omit `args`, or point `command` / `args` at a built `dist/index.js` from a clone—see the [starkfi-mcp-agent README](https://github.com/starkfi-io/starkfi-mcp-agent/blob/main/README.md).
-
 </details>
 
 **References:** [GitHub — starkfi-mcp-agent](https://github.com/starkfi-io/starkfi-mcp-agent) · [npm — starkfi-mcp](https://www.npmjs.com/package/starkfi-mcp)
@@ -169,10 +165,8 @@ For a global binary on `PATH`, set `"command": "starkfi-mcp"` and omit `args`, o
 
 | Resource | URL |
 |----------|-----|
-| **Product & API documentation** | [starkfi.mintlify.app](https://starkfi.mintlify.app/) |
-| **Structured index for models** | [starkfi.mintlify.app/llms.txt](https://starkfi.mintlify.app/llms.txt) |
-
-Use `llms.txt` to ground assistants on endpoints and flows without exposing credentials in prompts.
+| **Product & API documentation** | [docs.starkfi.io](https://docs.starkfi.io/) |
+| **Structured index for models** | [docs.starkfi.io/llms.txt](https://docs.starkfi.io/llms.txt) |
 
 ---
 
@@ -187,20 +181,11 @@ Tools are grouped by **prefix**; each tool’s MCP description guides **when** t
 | `starkpay_*` | Payment status, intents, transaction creation, on-chain broadcast, card tokenization payloads |
 | `kyc_*` | Prepare user, email OTP, verify OTP, Didit session, status |
 
-API requests use **root-relative** paths on the configured host (for example `GET /yield/strategies`, `GET /kyc/status`)—see the [starkfi-mcp-agent](https://github.com/starkfi-io/starkfi-mcp-agent) repository for the authoritative tool list.
-
 ---
 
 ## Cursor agent skills
 
-Official **`SKILL.md`** bundles teach the agent **yield**, **StarkPay / orders**, **KYC**, and **MCP host** conventions. They ship with **starkfi-agent-skills** and are indexed under `agent-skills/` in both repositories. Install into **`.cursor/skills/`** (or rely on `starkfi-agent-skills setup`) so Cursor discovers them automatically.
-
-| Skill focus | Typical use |
-|-------------|-------------|
-| MCP overview | Host config, env vars, tool prefixes, secret handling |
-| Yield | Deposit, withdraw, rebalance, broadcast workflows |
-| Payments | Orders and StarkPay lifecycle |
-| KYC | Ordered verification and Didit-related steps |
+Official **`SKILL.md`** bundles teach the agent **yield**, **StarkPay / orders**, **KYC**, and **MCP host** conventions. They ship with **starkfi-agent-skills**. Install into **`.cursor/skills/`** so Cursor discovers them automatically.
 
 ---
 
@@ -208,18 +193,14 @@ Official **`SKILL.md`** bundles teach the agent **yield**, **StarkPay / orders**
 
 > **Treat `STARKFI_API_KEY` as a production secret.** Store it in the MCP host `env` block, a secure environment, or a secret manager—not in source control.
 
-- Do not commit keys, `.env` files with live credentials, or host configs that embed literals in shared repos.
-- If you use `${STARKFI_API_KEY}` in `.mcp.json`, document how engineers export the variable and keep private paths out of version control.
-- Rotate keys from the dashboard if a credential may have leaked.
-
 ---
 
 ## Official repositories
 
 | Repository | Responsibility |
 |------------|------------------|
-| [**starkfi-agent-skills**](https://github.com/starkfi-io/starkfi-agent-skills) | One-shot developer setup: Cursor skills + MCP registration for Cursor, Claude Desktop, and Claude Code options |
-| [**starkfi-mcp-agent**](https://github.com/starkfi-io/starkfi-mcp-agent) | `starkfi-mcp` implementation, tool schemas, build scripts, and advanced MCP host documentation |
+| [**starkfi-agent-skills**](https://github.com/starkfi-io/starkfi-agent-skills) | One-shot developer setup: Cursor skills + MCP registration |
+| [**starkfi-mcp-agent**](https://github.com/starkfi-io/starkfi-mcp-agent) | `starkfi-mcp` implementation and tool schemas |
 
 ---
 
@@ -227,17 +208,15 @@ Official **`SKILL.md`** bundles teach the agent **yield**, **StarkPay / orders**
 
 | Goal | Command or link |
 |------|-----------------|
-| Fastest Cursor / Claude onboarding | `npx starkfi-agent-skills setup` then restart the application |
+| Fastest Cursor / Claude onboarding | `npx starkfi-agent-skills setup` |
 | Run MCP server standalone | `STARKFI_API_KEY=… npx -y starkfi-mcp` |
-| Read-only grounding for LLMs | [llms.txt](https://starkfi.mintlify.app/llms.txt) |
+| Read-only grounding for LLMs | [llms.txt](https://docs.starkfi.io/llms.txt) |
 | Protocol specification | [Model Context Protocol](https://modelcontextprotocol.io/) |
 
 ---
 
 <div align="center">
 
-**StarkFi** · [Website & dashboard](https://starkfi.io/) · [Documentation](https://starkfi.mintlify.app/)
-
-*Integration assets are provided as-is; refer to repository licenses and terms of service for your environment.*
+**StarkFi** · [Website & dashboard](https://starkfi.io/) · [Documentation](https://docs.starkfi.io/)
 
 </div>
